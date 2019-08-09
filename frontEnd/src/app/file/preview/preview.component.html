@@ -1,0 +1,83 @@
+<ng-template #template>
+  <div class="modal-header">
+   <h4 class="modal-title pull-right">Employee Data</h4>
+   <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+     <span aria-hidden="true">&times;</span>
+   </button>
+ </div>
+ <div class="modal-body">
+
+  <form [formGroup]="editEmployee">
+ <label>Employee Code:</label>
+ <input type="text" class="form-control" formControlName="empCode"> 
+ <div *ngIf="disMngCode">
+ <label>Manager Code:</label>
+ <input type="text" class="form-control" formControlName="mngCode" disabled>
+ </div> 
+ <label>First Name:</label>
+ <input type="text" class="form-control" formControlName="fname">
+ <label>Last Name:</label>
+ <input type="text" class="form-control" formControlName="lname">
+ <label>Email:</label>
+ <input type="text" class="form-control" formControlName="email">
+ <label>Employee Status:</label><br>
+  <input type="radio" name="empStatus" value="active" formControlName="empStatus"> Active<br>
+  <input type="radio" name="empStatus" value="inactive" formControlName="empStatus"> Inactive<br>
+ <button [disabled]="!editEmployee.valid" type="submit" class="btn btn-primary" style="margin-left:3cm;width:200px" (click)="onClick()" (click)="modalRef.hide()">ADD</button>
+ </form>
+ </div>
+</ng-template>
+
+<h1 style="text-align: center;margin-top: 1.5cm">Employee Data</h1>
+<table style='width:90%;margin-left: 2cm' *ngIf="allData">
+    <tr>
+      <th>#</th>
+      <th>Employee Code</th>
+      <th>Manager Code</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+      <th>Status</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+    <tr *ngFor="let emp of allData.employees;index as i">
+      <td>{{i+1}}</td>
+      <td>{{emp.emp_code}}</td>
+      <td>{{emp.mng_code}}</td>
+      <td>{{emp.empName}}</td>
+      <td>{{emp.empLastName}}</td>
+      <td>{{emp.empEmail}}</td>
+      <td>{{emp.empStatus}}</td>
+      <td><span><button type="submit" class="btn btn-warning" (click)="openModal(template,emp,'1')" style="margin-bottom:3%">Edit</button></span></td>
+      <td><span><button type="submit" class="btn btn-danger" (click)="delR(i,'1')" style="margin-bottom:3%">Delete</button></span></td>
+    </tr>
+  </table>
+  
+  <h1 style="text-align: center;margin-top: 1.5cm">Manager Data</h1>
+<table style='width:90%;margin-left: 2cm' *ngIf="allData">
+    <tr>
+      <th>#</th>
+      <th>Employee Code</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+      <th>Status</th>
+    <th>Edit</th>
+    <th>Delete</th>
+    </tr>
+    <tr *ngFor="let emp of allData.manager;index as i">
+      <td>{{i+1}}</td>
+      <td>{{emp.emp_code}}</td>
+      <td>{{emp.mngName}}</td>
+      <td>{{emp.mngLastName}}</td>
+      <td>{{emp.mngEmail}}</td>
+      <td>{{emp.mngStatus}}</td>
+      <td><span><button type="submit" class="btn btn-warning" (click)="openModal(template,emp,'2')" style="margin-bottom:3%">Edit</button></span></td>
+      <td><span><button type="submit" class="btn btn-danger" (click)="delR(i,'2')" style="margin-bottom:3%">Delete</button></span></td>
+    </tr>
+  </table>
+  <button class="btn btn-primary btnwidth" type="button" style="margin-top: 1cm;margin-left: 16cm" (click)="onSave()">Save</button>
+  <button class="btn btn-primary btnwidth" type="button" style="margin-top: 1cm;margin-left: 1cm" (click)="onCancel()">Cancel</button>
+
+  
